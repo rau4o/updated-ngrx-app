@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {RouterLinkWithHref} from "@angular/router";
+import {RouterLink} from "@angular/router";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {authActions} from "../../store/actions";
@@ -13,7 +13,7 @@ import {AuthService} from "../../services/auth.service";
   selector: 'app-register',
   templateUrl: './register.component.html',
   imports: [
-    RouterLinkWithHref,
+    RouterLink,
     ReactiveFormsModule,
     CommonModule
   ],
