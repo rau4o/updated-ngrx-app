@@ -5,9 +5,10 @@ import {Store} from "@ngrx/store";
 import {authActions} from "../../store/actions";
 import {RegisterRequestInterface} from "../../types/registerRequest.interface";
 import {AuthStateInterface} from "../../types/authState.interface";
-import {CommonModule} from "@angular/common";
-import {selectIsSubmitting} from "../../store/reducers";
-import {AuthService} from "../../services/auth.service";
+import {CommonModule, NgIf} from "@angular/common";
+import {selectIsSubmitting, selectValidationErrors} from "../../store/reducers";
+import {combineLatest} from "rxjs";
+import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,9 @@ import {AuthService} from "../../services/auth.service";
   imports: [
     RouterLink,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    BrowserModule,
+    NgIf
   ],
   standalone: true
 })
@@ -27,7 +30,10 @@ export class RegisterComponent {
     email: ['', Validators.required],
     password: ['', Validators.required]
   })
-  public isSubmitting$ = this.store.select(selectIsSubmitting);
+  public data$ = combineLatest({
+    isSubmitting: this.store.select(selectIsSubmitting),
+    backendErrors: this.store.select(selectValidationErrors)
+  })
 
   constructor(private formBuilder: FormBuilder,
               private store: Store<{auth: AuthStateInterface}>) {}
