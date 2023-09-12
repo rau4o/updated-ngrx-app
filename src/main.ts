@@ -1,12 +1,23 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {bootstrapApplication} from "@angular/platform-browser";
+import {AppComponent} from "./app/app.component";
+import {provideRouter} from "@angular/router";
+import {appRoutes} from "./app/app.routes";
+import {provideState, provideStore} from "@ngrx/store";
+import {provideStoreDevtools} from "@ngrx/store-devtools";
+import {importProvidersFrom, isDevMode} from "@angular/core";
+import {authFeatureKey, authReducer} from "./app/auth/store/reducers";
+import {HttpClientModule} from "@angular/common/http";
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule),
+    provideRouter(appRoutes),
+    provideStore(),
+    provideState(authFeatureKey, authReducer),
+    provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+    })
+  ]
+});
