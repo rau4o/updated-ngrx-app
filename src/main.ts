@@ -16,7 +16,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(appRoutes),
     provideStore(),
     provideState(authFeatureKey, authReducer),
-    provideEffects([authEffects]),
+    provideEffects(authEffects),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
