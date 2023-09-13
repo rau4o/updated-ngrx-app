@@ -17,7 +17,6 @@ import {BrowserModule} from "@angular/platform-browser";
     RouterLink,
     ReactiveFormsModule,
     CommonModule,
-    BrowserModule,
     NgIf
   ],
   standalone: true
